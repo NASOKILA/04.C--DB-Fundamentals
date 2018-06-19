@@ -1,0 +1,126 @@
+ 
+
+
+Otvarqme si BAZA_test_... pravim si nova baza (vurhu databses papkata dqsno kopche, crate new dadabase)
+i nova tablica (dqsno kopche create new table)
+sus id, name i age 
+
+Pravim id da e primary key, i age da ne e zaduljitelno t.e. da moje da bude i nullable.
+Dobavqme si danni v bazata(dqsno kopche na tablicata, edit top 200 rows)
+
+Otvarqme prozorche na koeto da pishem SQL KOMANDI (dqsno kopche na tablicata, select top 1000 rows)
+Pishem sledniq SQL:
+	SELECT name FROM Minions
+	ORDER BY name
+// Taka selektvame samo imenata i gi sortirame in ascending order po samite imena
+
+Posle promenqme dobavqme nova tablica Towns i gi svurzvame dvete 
+
+
+
+
+KATO UPRAJNENIE SI NAPRAVIHME 3 TABLICI Students, Classes i Teachers I GI NAPULNIHME, PISAHME I SQL ZA SELEKTIRANE, UPDATEVANE SORTIRANE PO DECHENDING ORDER, INSERTVANE I DELETVANE NA KOLONI V DADENA TABLICA.
+
+SELECT Name FROM Classes //Selektirame imenata i gi sortirame po id na obratno
+ORDER BY Id DESC;
+
+DELETE FROM Classes
+WHERE Id=16;
+
+
+INSERT INTO Classes (Id, Name, MaxStudents)
+VALUES (16,'Algebra2',222);
+
+UPDATE Minions  
+SET age = age + 1;
+// Tova Updateva tablicata Minins, kolonata age i stoinostita da sa = na stariq age + 1
+
+
+KOGATO TRIEM BAZA E MNOGO VAJNO DA CUKNEM NA Close Existing Connections I DA OSTAVIM GORNOTO KVADRATCHE PRAZNO ZA DA MOJE DA SE IZTRIE BAZATA NAPULNO.
+
+
+VAJNO!!! ZA DA MOJEM DA PROMENQME NESHTATA PO TABLICITE BEZ DA NI IZLIZA GREHKA CHE TRQBVA DA PRAVIM TABLICATA NA NOVO: TRQBVA DA OTIDEM NA Tools,Options,Designers,Table and Database Designers I DA OSTAVIM PRAZNO KVADRATCHETO Prevent savind changes that require table re-creation
+
+
+PRIMARY KEY NI GARANTIRA UNIKALNOST T.E. NQMA KAK DA IMAME DVE EDNAKVI STOINOSTI !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+VAJNO!!!  SLED KATO SUEDINIM DVE TABLICI MOJEM OT EDNATA CHREZ ZAPISANOTO ID KOETO E FK DO DRUGATA DA NAMERIM SAMITE STOINOSTI NA DRUGATA TABLICA CHREZ SLEDNIQ SQL:
+
+SELECT Minions.name, Towns.name FROM Minions
+JOIN Towns ON Towns.Id = Minions.townsId
+
+// TOVA NI GI SUEDINQVA V EDNA TABLICA, TAKA NAMALQVAME OBEMA NA DANNITE KOITO PAZIM I POVTARQEMOSTA SLEDOVATELNO PO LESNO DOSTIGAME DO KONSISTENTNOST NA DANNITE KOITO SUHRANQVAME.
+
+//Ako iskame da predadem nashata baza na nqkoi prosto klikvame dqsno kopche na neq, Script Database as, CREATE to, File   TOVA NI GENERIRA SQL SCRIPT NA CQLATA BAZA KOITO MOJE DA PROSTO DA GO PODADEM NA NQKOI NASH KOLEGA.
+OBACHE TAKA NE NI ZAPAZVA DANNITE V NEQ.
+
+// ZA DA ZAPAZIM I DANNITE TRQBVA DA OTIDEM NA dqsno kopche na bazata, taska, generate scripts, OTVARQ SE PROZORCHE, next, selectvame tablicite , next, I OTIVAME NA Advaced, Types of data to script I SELEKTIRAME Scheme and data,
+Zapazvame si q nqkude, next, next, finish
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
