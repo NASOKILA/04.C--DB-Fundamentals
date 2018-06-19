@@ -1,0 +1,119 @@
+
+
+
+
+--KOMENTAR NA EDIN RED
+
+/*
+Komentar 
+na mnogo 
+redove
+*/
+
+--Pravim si tablica Measurments
+CREATE TABLE Measurments(
+Id INT NOT NULL IDENTITY PRIMARY KEY,
+Kelvin decimal(10,2) CHECK (Kelvin > 0)
+)
+
+/*
+Kelvin ima ogranichenie do 10 cifri i 2 sled 
+desetichnata zapetaq, i proverka dali e > 0 
+*/
+
+--Selectirame vsuchko ot Measurents
+SELECT * FROM Measurments
+
+--Updatevame V tablicta Measurents, setvame 
+--Kelvin da e = 2 tam kudeto Kelvin e = na 1
+UPDATE Measurments
+SET Kelvin = 2
+WHERE Kelvin = 1
+
+-- Dobavqme UNIQUE kum Kolonata Balance
+ALTER TABLE Account
+ADD CONSTRAINT Balance_Unique 
+UNIQUE (Balance) 
+
+-- S CONSTRAINT mojem da dobavqme na dadena 
+-- kolona da bude UNIQUE, PRIMARY KEY,DEFAULT 
+-- i drugi.
+
+
+
+
+
+
+
+
+
+
+
+
+-- Dobavqme si kolona Phone
+ALTER TABLE People
+ADD Phone varchar(50)
+
+--Promenqme tipa na Kolonata Phone, ot 
+--varchar(50) na varchar(20)
+ALTER TABLE People
+ALTER COLUMN Phone varchar(20)
+
+
+--Mahame colonata Email no predi tova trqbva da 
+--mahnem klucha kum neq inache dava error
+ALTER TABLE People 
+DROP COLUMN Email
+
+SELECT * FROM People
+
+
+--Suzdavame nova tablica
+CREATE TABLE Cars(
+Id INT, 
+Model varchar(50)
+)
+
+--Iskame da napravim Id da e PRIMARY KEY no 
+
+--purvo pravim Id kolonata da e NOT NULL
+ALTER TABLE Cars
+ALTER COLUMN Id INT NOT NULL
+
+--Setvame Id da e PRIMARY KEY
+ALTER TABLE Cars 
+ADD CONSTRAINT PK_Cars
+PRIMARY KEY (Id) 
+
+--Slagame default na vsichki modeli
+ALTER TABLE Cars
+ADD CONSTRAINT DF_Model
+DEFAULT ('Select Model') FOR Model
+
+--dropvame Constraint-a, ako ne znaem imeto mojem 
+--prosto da go dragne m i dropnem ot meniuto
+ALTER TABLE Cars
+DROP CONSTRAINT DF_Model
+
+-- Kak da promeni vecje sushtestvuvashta stoinost:
+-- neshto ne stava !!!
+ALTER TABLE Cars
+ALTER COLUMN Model
+SET DEFAULT 'Choose Model'
+
+--Iztrihme vsichki danni v tablizata People
+TRUNCATE TABLE People
+
+
+--Znaem kak se dropva
+--VAJNO: Za da dropnem cqla baza trqbva da se namirame v druga 
+
+/*
+Truncating e da iztriem vsichko v edna tablica.
+Mojem da dropvame bazi, koloni, kluchove, constraini i dr.
+I DVETE SE POLZVAT VNIMATELNO ZASHTOTO NE MOJE DA SE VURNEM POSLE NAZAD.
+*/
+
+
+
+
