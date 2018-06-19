@@ -1,0 +1,63 @@
+
+--Zadacha 1
+CREATE DATABASE Minions
+
+
+
+--Zadacha 2
+CREATE TABLE Minions
+(
+Id INT NOT NULL,
+Name nvarchar(50) NOT NULL,
+Age INT
+)
+
+CREATE TABLE Towns
+(
+Id INT NOT NULL,
+Name nvarchar(50) NOT NULL
+)
+
+ALTER TABLE Minions
+ADD CONSTRAINT PK_Minions
+PRIMARY KEY (Id)
+
+ALTER TABLE Towns
+ADD CONSTRAINT PK_Towns
+PRIMARY KEY (Id)
+
+
+
+--Zadacha 3
+ALTER TABLE Minions
+ADD TownId INT NOT NULL
+
+ALTER TABLE Minions
+ADD CONSTRAINT FK_MinionsTowns
+FOREIGN KEY (TownId)
+REFERENCES Towns(Id)
+
+
+
+--Zadacha 4
+
+INSERT INTO Towns
+VALUES 
+(1, 'Plovdiv'),
+(2, 'Sofiq'),
+(3, 'Varna')
+
+INSERT INTO Minions
+VALUES 
+(1, 'Kevin', 22, 1),
+(2, 'Bob', 15, 3),
+(3, 'Steward', NULL, 2)
+
+
+--Zadacha 5
+TRUNCATE TABLE Minions
+
+
+--Zadacha 6
+DROP TABLE Minions
+DROP TABLE Towns

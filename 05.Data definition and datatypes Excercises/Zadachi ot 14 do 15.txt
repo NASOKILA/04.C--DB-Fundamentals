@@ -1,0 +1,300 @@
+
+--Zadacha 14
+USE master
+
+CREATE DATABASE CarRental
+
+USE CarRental
+
+CREATE TABLE Categories (
+Id INT NOT NULL IDENTITY,
+CategoryName nvarchar(50) NOT NULL,
+DailyRate INT,
+WeeklyRate INT,
+MonthlyRate INT,
+WeekendRate INT
+)
+
+CREATE TABLE Cars (
+Id INT NOT NULL IDENTITY,
+PlateNumber varchar(50) NOT NULL,
+Manufacturer nvarchar(50) NOT NULL,
+Model nvarchar(25) NOT NULL,
+CarYear varchar(4) NOT NULL,
+CategoryId INT NOT NULL,
+Doors INT,
+Picture varbinary(2),
+Condition nvarchar(25),
+Available Bit
+)
+
+CREATE TABLE Employees (
+Id INT NOT NULL IDENTITY,
+FirstName nvarchar(50) NOT NULL,
+LastName nvarchar(50) NOT NULL,
+Title nvarchar(50) NOT NULL,
+Notes nvarchar(MAX)
+)
+
+CREATE TABLE Customers (
+Id INT NOT NULL IDENTITY,
+DriverLicenceNumber INT NOT NULL,
+FullName nvarchar(50) NOT NULL,
+Address nvarchar(100) NOT NULL,
+City nvarchar(50),
+ZIPCode INT,
+Notes nvarchar(MAX)
+)
+
+CREATE TABLE RentalOrders (
+Id INT NOT NULL IDENTITY,
+EmployeeId INT NOT NULL,
+CustomerId INT NOT NULL,
+CarId INT NOT NULL,
+TankLevel INT,
+KilometrageStart DECIMAL(19,2),
+KilometrageEnd DECIMAL(19,2),
+TotalKilometrage DECIMAL(19,2),
+StartDate DATE,
+EndDate DATE,
+TotalDays INT,
+RateApplied DECIMAL(10,2),
+TaxRate DECIMAL(10,2),
+OrderStatus nvarchar(25),
+Notes nvarchar(MAX)
+)
+
+
+ALTER TABLE Categories
+ADD CONSTRAINT PK_Categories
+PRIMARY KEY(Id)
+
+ALTER TABLE Cars
+ADD CONSTRAINT PK_Cars
+PRIMARY KEY(Id)
+
+ALTER TABLE Cars
+ADD CONSTRAINT FK_Cars
+FOREIGN KEY(CategoryId)
+REFERENCES Categories(Id)
+
+ALTER TABLE Employees
+ADD CONSTRAINT PK_Employees
+PRIMARY KEY(Id)
+
+ALTER TABLE Customers
+ADD CONSTRAINT PK_Costumers
+PRIMARY KEY(Id)
+
+ALTER TABLE RentalOrders 
+ADD CONSTRAINT PK_RentalOrders
+PRIMARY KEY(Id)
+
+ALTER TABLE RentalOrders 
+ADD CONSTRAINT FK_RentalOrdersEmployeeId
+FOREIGN KEY(EmployeeId)
+REFERENCES Employees(Id)
+
+ALTER TABLE RentalOrders 
+ADD CONSTRAINT FK_RentalOrdersCostumerId
+FOREIGN KEY(CustomerId)
+REFERENCES Customers(Id)
+
+ALTER TABLE RentalOrders 
+ADD CONSTRAINT FK_RentalOrdersCarId
+FOREIGN KEY(CarId)
+REFERENCES Cars(Id)
+
+
+INSERT INTO Categories
+VALUES
+('Bike',4,6,8,6),
+('Car',3,9,1,3),
+('Truck',9,4,7,2)
+
+INSERT INTO Cars(PlateNumber, Manufacturer, Model, CarYear, CategoryId, Doors)
+VALUES
+('E421CA','Opel', 'Astra', '2005',1,5),
+('E919EN','Opel', 'Vectra', '1995',1,3),
+('E871BG','Nissn', 'Primara', '2015',1,3)
+
+INSERT INTO Employees
+VALUES
+('Atanas','Kambitov', 'Boss', 'Note1'),
+('Anton','Kambitov', 'Client', 'Note2'),
+('Asen','Kambitov', 'Worker', 'Note3')
+
+INSERT INTO Customers
+VALUES
+(123131,'Antonina Kambitova', 'Ulica krushevo 5','Blgoevgrad',2700,'Note1'),
+(663743,'Toedor Stoqnov', 'Ulica krushevo 6','Blgoevgrad',2700,'Note3'),
+(756342,'Maq Stoqnova', 'Ulica krushevo 7','Blgoevgrad',2700,'Note2')
+
+INSERT INTO RentalOrders(EmployeeId, CustomerId, CarId)
+VALUES
+(2,1,3),
+(2,1,3),
+(2,1,3)
+
+
+
+
+--Zadacha 15
+CREATE DATABASE Hotel;
+
+
+CREATE TABLE Employees(
+Id INT NOT NULL IDENTITY,
+FirstName nvarchar(50) NOT NULL,
+LastName nvarchar(50) NOT NULL,
+Title nvarchar(25) NOT NULL,
+Notes nvarchar(MAX)
+)
+
+CREATE TABLE Costumers(
+AccountNumber INT NOT NULL,
+FirstName nvarchar(25) NOT NULL,
+LastName nvarchar(25) NOT NULL,
+PhoneNumber varchar(25) NOT NULL,
+EmergencyName nvarchar(25),
+EmergencyNumber varchar(25),
+Notes nvarchar(MAX)
+)
+
+CREATE TABLE RoomStatus(
+RoomStatus nvarchar(25) NOT NULL,
+Notes nvarchar(MAX)
+) 
+
+CREATE TABLE RoomTypes(
+RoomType nvarchar(25) NOT NULL,
+Notes nvarchar(MAX)
+) 
+
+CREATE TABLE BedTypes(
+BedType nvarchar(25) NOT NULL,
+Notes nvarchar(MAX)
+) 
+
+CREATE TABLE Rooms(
+RoomNumber INT NOT NULL, 
+RoomType nvarchar(25) NOT NULL,
+BedType nvarchar(25) NOT NULL,
+Rate INT,
+RoomStatus nvarchar(25),
+Notes nvarchar(MAX)
+)
+
+CREATE TABLE Payments(
+Id INT NOT NULL IDENTITY,
+EmployeeId INT NOT NULL,
+PaymentDate DATE NOT NULL,
+AccountNumber INT,
+FirstDateOccupied DATE,
+LastDateOccupied DATE,
+TotalDays INT,
+AmountCharged DECIMAL(10,2) NOT NULL,
+TaxRate DECIMAL(10,2),
+TaxAmount DECIMAL(10,2),
+PaymentTotal DECIMAL(10,2),
+Notes nvarchar(MAX)
+)
+
+CREATE TABLE Occupancies(
+Id INT NOT NULL IDENTITY,
+EmployeeId INT NOT NULL,
+DateOccupied DATE NOT NULL,
+AccountNumber INT NOT NULL,
+RoomNumber INT NOT NULL,
+RateApplied DECIMAL(5,2),
+PhoneCharge DECIMAL(5,2),
+Notes nvarchar(MAX)
+)
+
+
+ALTER TABLE Employees
+ADD CONSTRAINT PK_Employees
+PRIMARY KEY(Id)
+
+ALTER TABLE Costumers
+ADD CONSTRAINT PK_Costumers
+PRIMARY KEY(AccountNumber)
+
+ALTER TABLE RoomStatus
+ADD CONSTRAINT PK_RoomStatus
+PRIMARY KEY(RoomStatus)
+
+ALTER TABLE RoomTypes
+ADD CONSTRAINT PK_RoomTypes
+PRIMARY KEY(RoomType)
+
+ALTER TABLE BedTypes
+ADD CONSTRAINT PK_BedTypes
+PRIMARY KEY(BedType)
+
+ALTER TABLE Rooms
+ADD CONSTRAINT PK_Rooms
+PRIMARY KEY(RoomNumber)
+
+ALTER TABLE Payments
+ADD CONSTRAINT PK_Payments
+PRIMARY KEY(Id)
+
+ALTER TABLE Occupancies
+ADD CONSTRAINT PK_Occupancies
+PRIMARY KEY(Id)
+
+
+INSERT INTO Employees
+VALUES
+('Atanas','Kambitov', 'Junior', 'Note1'),
+('Asen','Kambitov', 'Boss', 'Note2'),
+('Stefan','Kambitov', 'Manager', 'Note3')
+
+INSERT INTO Costumers
+VALUES
+(34235, 'Anton', 'Stoqnov', '+359 889 744 524','Toni','+359 887 333 212','Note1'),
+(23425, 'Teodor', 'Stoqnov', '+359 889 744 524','Toshko','+359 887 333 212','Note2'),
+(45345, 'Georgi', 'Stoqnov', '+359 889 744 524','Gosho','+359 887 333 212','Note3')
+
+INSERT INTO RoomStatus
+VALUES
+('Good', 'Note1'),
+('Bad', 'Note2'),
+('Normal', 'Note3')
+
+INSERT INTO RoomTypes
+VALUES
+('Double','Note1'),
+('Single','Note2'),
+('Normal','Note3')
+
+INSERT INTO BedTypes
+VALUES
+('Big','Note1'),
+('Small','Note2'),
+('Normal','Note3')
+
+INSERT INTO Rooms
+VALUES
+(123,'Double','Small',3, 'Good', 'Note1'),
+(124,'Normal','Small',1, 'Ok', 'Note1'),
+(125,'Single','Big',1, 'Bad', 'Note1')
+
+INSERT INTO Payments(EmployeeId, PaymentDate, AmountCharged)
+VALUES
+(433756, '1992-05-07', 2355.34),
+(952997, '1998-12-10', 9621.54),
+(619221, '2000-01-06', 6511.23)
+
+INSERT INTO Occupancies(EmployeeId, DateOccupied, AccountNumber, RoomNumber)
+VALUES
+(241657, '2000-01-09', 4352315, 111),
+(782116, '1996-11-12', 2947523, 112),
+(887447, '1985-06-02', 6728953, 113)
+
+
+
+
+
+

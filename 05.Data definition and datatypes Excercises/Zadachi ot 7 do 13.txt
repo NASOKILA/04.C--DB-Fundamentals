@@ -1,0 +1,175 @@
+
+--Zadacha 7
+CREATE TABLE People (
+Id INT UNIQUE IDENTITY,
+Name nvarchar(200) NOT NULL,
+Picture varbinary(2),
+Height FLOAT(2),
+Weight FLOAT(2),
+Gender char(1) NOT NULL,
+Birthday DATE NOT NULL,
+Biography nvarchar(max)
+)
+
+ALTER TABLE People
+ADD CONSTRAINT PK_People
+PRIMARY KEY (Id)
+
+INSERT INTO People(Name, Picture, Height, Weight, Gender, Birthday, Biography)
+VALUES --Ako ostavim skobite prazni shte razbere po podrazbirane che iskame da napulnim vsichki propertita.
+('Atanas', CONVERT(varbinary(2), 'C:\Users\user\Desktop\Naso.png'),188.55, 82.20, 'm', '1992-12-06', 'My name is Atanas and I am 24.'),
+('Asen', CONVERT(varbinary(2), 'C:\Users\user\Desktop\Naso.png'),185.68, 80.00, 'm', '1991-10-18', 'My name is Asen and I am 25.'),
+('Anton', CONVERT(varbinary(2), 'C:\Users\user\Desktop\Naso.png'),190.36, 75.50, 'm', '1992-11-12', 'My name is Anton and I am 24.'),
+('Antonina', CONVERT(varbinary(2), 'C:\Users\user\Desktop\Naso.png'),175.12, 55.40, 'f', '2015-11-10', 'My name is Antonina and I am 46.'),
+('Stefan', CONVERT(varbinary(2), 'C:\Users\user\Desktop\Naso.png'),182.58, 85.80, 'm', '2015-11-10', 'My name is Stefan and I am 46.')
+
+
+--Zadacha 8
+ CREATE TABLE Users(
+ Id BIGINT UNIQUE IDENTITY,
+ Username varchar(30) UNIQUE NOT NULL,
+ Password varchar(26) UNIQUE NOT NULL,
+ ProfilePicture varbinary(MAX),
+ LastLoginTime DATETIME,
+ IsDeleted BIT
+ )
+
+ --Dobavqme si konstraint za size-a na ProfilePicture
+ ALTER TABLE Users
+ ADD CONSTRAINT CH_ProfilePictureSize
+
+ CHECK (DATALENGTH(ProfilePicture) < 900 * 1024)
+
+ALTER TABLE Users
+ADD CONSTRAINT PK_Users
+PRIMARY KEY (Id)
+
+
+ALTER TABLE Users
+ADD CONSTRAINT UQ_Username CHECK (LEN(ProfilePicture) < 900 * 1024)
+
+
+DECLARE @C VARCHAR(MAX) = '|' --zpazvame si nqkakuv sinvol v promenliva
+DECLARE @ProfilePicture VARBINARY(MAX) = CONVERT(VARBINARY(MAX), REPLICATE(@C, (921599)));
+--replikirame tazi promenliva 921599 puti, konvertirame q v VARBINARY i seivame vsichko v promenliva @ProfilePicture
+
+INSERT INTO Users(Username, Password, ProfilePicture)
+VALUES 
+('NASOKILA', '1234', @ProfilePicture),
+('Mama', 'wad5awd6dw78wadgh', @ProfilePicture),
+('Nebiro11', '9999', @ProfilePicture),
+('Nebiro12', '8dw8daw88', @ProfilePicture),
+('Nebiro13', '7777bdfvd', @ProfilePicture)
+
+
+/*
+Ako imame dva priary klucha znachi vrotiq(TOZI KOITO NE E ID) se naricha 
+kluch kompositor
+*/
+
+
+--Zadacha 9:
+ALTER TABLE Users
+DROP CONSTRAINT PK_Users
+
+ALTER TABLE Users
+ADD CONSTRAINT PK_User
+PRIMARY KEY(Id, Username)
+
+--Zdacha 10
+ALTER TABLE Users
+ADD CONSTRAINT CH_PasswordLength
+CHECK(LEN(Password) >= 5)
+
+
+--Zadacha 11
+ALTER TABLE Users
+ADD CONSTRAINT DF_LastLoginTime
+DEFAULT GETDATE() FOR LastLoginTime
+
+--Zadacha 12
+ALTER TABLE Users
+DROP CONSTRAINT PK_User
+
+ALTER TABLE Users
+ADD CONSTRAINT PK_User
+PRIMARY KEY (Id)
+
+ALTER TABLE Users
+ADD CONSTRAINT UQ_User
+CHECK(LEN(Username) >= 3)
+
+
+
+
+ 
+--Zadacha 13
+
+
+CREATE DATABASE Movies;
+
+CREATE TABLE Directors(
+Id INT NOT NUll PRIMARY KEY IDENTITY,
+DirectorName varchar(100),
+Notes varchar(MAX)
+)
+
+CREATE TABLE Genres(
+Id INT NOT NUll PRIMARY KEY IDENTITY,
+GenreName varchar(100) NOT NULL,
+Notes varchar(MAX)
+)
+
+CREATE TABLE Categories(
+Id INT NOT NUll PRIMARY KEY IDENTITY,
+CategoryName varchar(100) NOT NULL,
+Notes varchar(MAX)
+)
+
+CREATE TABLE Movies(
+Id INT NOT NUll PRIMARY KEY IDENTITY,
+Title varchar(100) NOT NULL,
+DirectorId INT NOT NULL,
+CopyrightYear DATE,
+Length FLOAT(2),
+GenreId INT NOT NULL,
+CategoryId INT NOT NULL,
+Rating tinyint,
+Notes varchar(MAX)
+)
+
+ALTER TABLE Movies
+ADD CONSTRAINT chk_Ratings CHECK (Rating >= 0 AND Rating <= 5);
+
+INSERT INTO Directors(DirectorName, Notes)
+VALUES
+('Nasko', 'No notes'),
+('Nasko2', 'No notes'),
+('Nasko3', 'No notes'),
+('Nasko4', 'No notes'),
+('Nasko5', 'No notes')
+
+INSERT INTO Genres(GenreName, Notes)
+VALUES
+('Nasko', 'No notes'),
+('Nasko2', 'No notes'),
+('Nasko3', 'No notes'),
+('Nasko4', 'No notes'),
+('Nasko5', 'No notes')
+
+INSERT INTO Categories(CategoryName, Notes)
+VALUES
+('Nasko', 'No notes'),
+('Nasko2', 'No notes'),
+('Nasko3', 'No notes'),
+('Nasko4', 'No notes'),
+('Nasko5', 'No notes')
+
+INSERT INTO Movies(Title, DirectorId, GenreId, CategoryId)
+VALUES
+('Movie', 1,1,1),
+('Movie2', 2,2,2),
+('Movie3', 3,3,3),
+('Movie4', 4,4,4),
+('Movie5', 5,5,5)
+
