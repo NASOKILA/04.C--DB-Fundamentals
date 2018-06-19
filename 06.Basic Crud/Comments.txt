@@ -1,0 +1,162 @@
+
+
+VAJNO !!! : OT SAITA https://chinookdatabase.codeplex.com/ MOJEM DA VZIMAME GOTOVI BAZI S KOITO DA PRAKTIKUVAME.
+
+VAJNO !!! : DUMICHKATA 'GO' OZN DA IZPULNIM VSICHKI ZAQVKI PREDI DUMICHKATA 'GO' !!!
+Primerno ako imame VIEW obekt i sled tova iskame da selektirame v nego TOVA NQMA KAK DA STANE V EDNA ZAQVKA ZASHTOTO VIEW OBEKTA NE SUSHTESTVUVA V MOMENTA NA IZPULNQVANETO ZA ZAQVKATA 'SELEKT'. ZATOVA SE SLAGE 'GO' MEJDU SUZDAVANETO NA VIEW OBEKTA I SELEKTIRANETO.
+
+
+
+
+Shte govorim za DML- Data Manipulation Language
+
+Shte govorim za Create, Retrieve, Delete, Update sus zaqvki
+
+SQL Oznachava Structured Query Language
+
+T-SQL e Transact-SQL koqto e druga versiq na SQL i ni pozvolqva da polzvame promenlivi, if-ove, cikli i dr. v samite zaqvki
+Napraven e za da poddurja kontrol na potoka
+
+Mojem da prekrushtavame tablici i koloni sus 'AS'
+
+Mojeme da svurzvame dve koloni v edna sus '+' i posle sis 'AS' da i dadem ime:
+SELECT [FirstName] + ' ' + [LastName] AS [FullName]
+      ,[JobTitle]
+      ,[Salary]
+  FROM [SoftUni].[dbo].[Employees]
+
+
+'[]' sa za MSSQL v slchaq mojem i bez tqh:
+SELECT FirstName + ' ' + LastName AS FullName
+      ,JobTitle
+      ,Salary
+  FROM Employees
+
+
+
+
+
+Mojem da selektirame samo unikalnite stoinosti na dedena kolona v tablica kato polzvame 
+'DISTINCT'
+
+S 'WHERE' mojem da filtrirame dadeni koloni, mojem da ozvame '=', '>=', '<=' i drugi.
+
+Mojem da polzvame logicheski operacii 'AND' i 'OR', Ako nqmame skobi v dadenq zaqvka mejdu 'AND' i 'OR' se schita 'AND' za prioritet.
+
+
+Mojem da polzvame 'BETWEEN' kato <= ili >=, Vzimame vichki rabotnici koito imat zaplata mejdu 2000 i 4000 
+
+SELECT FirstName + ' ' + LastName AS FullName
+      ,JobTitle
+      ,Salary
+  FROM Employees
+  WHERE Salary BETWEEN 2000 AND 4000
+
+
+Mojem da polzvame 'IN' ili 'NOT IN'
+Vzimame vsichki rabotnici koito sa v departament 1,3 ili 5
+SELECT FirstName + ' ' + LastName AS FullName
+      ,JobTitle
+      ,Salary
+  FROM Employees
+  WHERE DepartmentId IN (1,3,5)
+
+
+VAJNO !!! Ako slojim NOT pred dadena zaqvka shte ni oburne cqlata zaqvka
+
+NULL v SQL e lipsvashta stoinost, ne e kato 0 ili kato ' '
+
+
+VAJNO: !!!!  Ako pravim podobna zaqvka:
+  SELECT FirstName
+  FROM Employees
+  WHERE AddressId = NULL     
+
+//NQMA DA STANE 
+// NO AKO SLOJIM OTPRED 'IS' ili 'IS NOT' SHTE STANE
+  SELECT FirstName
+  FROM Employees
+  WHERE AddressId IS NULL
+
+
+PODREJDANE NA DANNITE:
+Polzvame ORDER BY  'ASC' i 'DESC' za ascending i descending
+Sortiraneto e mnogo bavna operaciq Ako Kliknem na meniuto butoncheto 'Display estimated execution plan'ili CTRL + L shte vidim kolko vreme e otnelo na zaqvkata za vsqka edna operciq
+
+
+
+VIEWS in SQL:
+Tova sa virtualni tablici napraveni ot drugi tablici koito se zapazvat ne v bazata, ne v harddiska a v pametta.
+Polzvat se za oprostqvane na slojni zaqvki i za limitirane na dostup do dannite na dadeni useri.
+Predvaritelno mojem da si napravim nqkakvo view koeto da vzima nqkvi neshta ot dadeni tablici i da gi sglobqva i posle mojem da sis selektirame ot samoto view.
+//KRUSHTAVAT SE SUS v_IMENAVIEWTO
+
+CREATE VIEW v_HighestPeak AS
+  SELECT TOP (1) * FROM Peaks 
+  ORDER BY Elevation DESC
+  
+//SEGA MOJEM DA MANIPULIRAME SAMOTO VIEW KOETO SI SUZDADOHME:
+SELECT * FROM v_HighestPeak 
+
+//Mojem da vidim viewtata v papkata views v nashata tablica
+
+
+
+
+ZAPISVANE NA DANNI HREZ ZAQVKI:
+
+VAJNO !!! : OT SAITA https://chinookdatabase.codeplex.com/ MOJEM DA VZIMAME GOTOVI BAZI S KOITO DA PRAKTIKUVAME.
+
+VAJNO !!! : Mojem da napishem taka IDENTITY(1,1) kudeto dvete edinici pokazvat ot kude da zapochne proeneto i prez kolko da ovelichava,
+
+VAJNO !!! : Kato dadem dqsno kopche na dadena tablica i posochim na Sktipt Table As ni izlizat opcii kato create, delete, insert i dr, TOVA NI GENERIRA AVTOMATICHNO ZAQVKATA!!!
+
+VAJNO !!! : Mojem da vzemem danni ot edna tablica i da gi slojim v druga s dumichkata 'INTO':
+
+  --Vzimme vsichko ot Continents i go slagame v nova baza MyContinents
+  SELECT * 
+  INTO MyContinents
+  FROM Continents
+
+--Mojem da napravim sushtoto no da e vuv veche sushtestvuvashta tablica.
+
+
+
+
+
+SEQUENCES:
+Te sa specialni obekti v SQL podobni na IDENTITY poletata, ima go samo v SQL, 
+v MySQL dumata 'IDENTITY' e 'AutoIncrement'
+Sequensa e obekt otdelen ot tablicata i ne e zakacheno za kolonata ili tablicata kakto e IDENTITY. Kato iztriem tablicata IDENTITY-to izchezva dokato SEQUENSA ne, to e zakacheno za bazata a ne za tablicata.
+Vrushta ni slefvashtata stoinost vseki put kogato go povikame.
+
+
+  CREATE SEQUENCE seq_Customers_CustomerID
+  AS INT
+  START WITH 1
+  INCREMENT BY 1
+  
+  SELECT NEXT VALUE FOR seq_Customers_CustomerID
+  --Tova ni vrushta sledvashata stoinost
+ 
+ZA KAKVO E NUJNO:
+Polezno e ako iskame primerno da imame dve tablici v koito id-to da ne se povtarq koeto nqma kak da stane s IDENTITY zashtoto to si vodi sobstven zapis.
+Mojem da kazvame primerno na sequensa kato stigne do 500 za zapochva pak ot 0 i takiva podobni neshta.	
+Sequensa e po burs ot IDENTITY zashtoto IDENTITY SE ZAPAZVA NA HARD DISK-a(SSD) A SEQUENSA E V PAMETTA, RABOTATA S DNNI V PAMETTA E PO BURZA OPERACIQ.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
