@@ -1,0 +1,35 @@
+
+
+4 mounths.
+
+Part 1: DB Basics Concepts and Functioality, SQL Requests, and Datatypes, SQL Language and Sintax, Tables connections, Base Programming, Why using Data Bases, 
+Basic Crud , Build in functions with T-SQL etc.
+
+Part 2: DB Advance, Clients implementation, Base Architechture, How to deal with Json objects, OOP etc.
+
+NQMA ZNACHENIE DALI SME MINALI PREZ FUNDAMENTALS, SHTE RAZGLEDAME I OOP.
+V judde pod C# development, DB fundamentals, DB Basics se namirat vsichki uprajneniq i primerni izpiti.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
