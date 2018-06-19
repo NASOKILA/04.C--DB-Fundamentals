@@ -1,0 +1,177 @@
+
+
+
+   
+Dannite mogat da se text, chisla, dati, json i oshte.
+
+
+
+
+NERELACIONNATA BAZA DANNI E MongoDB KOQTO DURJI DANNITE POD FORMA NA JSON OBEKTI.
+
+
+
+
+Za skladirane na danni stava slojno kato dannite stanat prealeno mnogo
+Kolko lesno se poddurjat tezi tablici i kak da turim v tqh.
+
+IMPORTANT NOTES About DB:
+1.SIZE: SIZE DOES METTER WITH DB.
+2.UPDATING: KAK SE PODDURJA TAZI TABICA AKO POVECHE HORA RABOTQT VURHU NEQ.
+3.ACCURACI: TOCHNOSTTA NA TEZI DANNI, Mojem da pravim promqni, i vseki moje da pravi promqni
+4.SECURITY: Nqma kak da dopusnem vseki da ima dostup do cqlata baza, dava se ogranichen dostup v zavisimost na koi se dava.
+5.REDUNDANCY(REPETITION): Ako imame dublirani stoinosti, ili edno i sushto neshto v razlichn format, koe e vqrno?, Informaciqta nqma da e konsistentna i shte se raboti trudno s neq.
+6.IMPORTANCE: Programata da zabiva, da crashva, i moje da se izgubat vajni danni, tova e nedopustimo.
+
+
+Bazite trqbva da imat pravila i organizirana struktora !
+Nie si opredelqme pravilata.
+Ima razlichni metodi za skladirane na danni v baza !
+
+RDBMS = Reational Data Base Managment System   e tova koeto uravlqva nashata baza danni i ni pozvolqva da komunikirame s bazata danni chrez ZAQVKI i ni dava nqkakuv otgovor
+
+
+DATABASE ENGINE: Razchita na client server otdel, OTSRESHTA NA BAZATA IMA SERVER KOITO Q OBSLUJVA I PO SREDATA SEDI ENGIN-a, Klientite izprashtat nqkakvo 
+query(Zaqvka) posle ENGIN-a ZAPITVA BAZATA I IM VRUSHTA OTGOVOR.
+
+Ima razlichni DB ENGIN-i(DBMS): 
+Oracle, MySQL, Microsoft SQL Server, PostgreSQL, DB2, Cassandra i dr.
+Nashiqt e  Microsoft SQL Server !!!!
+EDIN ENGINE MOJE DA E PO DOBUR OT DRUG V DADENO NESHTO NO DRUGIQT DA E PO DOBUR V DRUGO NESHTO !!!!!
+
+MongoDB Zapazva nehtata kato dokumenti
+Facebook izpolzvat Cassandra koeto obache ne e dobre za finansovi operacii.
+
+
+TRQBVA DA SI INSTALIRAME SQL SERVER Express Edition Costum, I MANAGMENT STUDIO ZADULJITELNO !!!!!
+
+Kato go otvotim vijdame nqkolko neshta, na nas shte ni trqbvat purvoto i vtoroto,
+1.SQL server stand alone installation
+2.SQL Server Managment Tool
+INSTALIRAME SI GI.
+
+
+
+SQL Server Architecture:
+1.Logical Storage Tova e nachinat po koito e strukturirana bazata
+ Imame INSTANCIQ Koeto e samiqt proce koito vurvi na servera, vutre v neq ima EDNA ILI POVECHE BAZI OT DANNI, vuv vsqka baza ima EDNA ILI POVECHE SHEMI, i vuv vsqka shema si IMA TABLICI V KOITO IMA DANNI
+
+Kato izprashtame zaqvki nie gi izprashtame kum INSTANCE 
+
+2.Informaciqta se zapazva chrez dva vida failove: 
+Data files and Logs Files !!!!!
+Data dailovete sudurjat dannite t.e. samata informaciq.
+Logs failovete sudurjat informaciq za tranzakciite, TRANZAKCIITE SA DOBUR NACHIN DA SE OSUGURI ZDAVINA NA BAZATA.
+DOKATO SERVERA RABOTI TOI SI ZAPISVA PROMENITE V LOGS FAILOVETE I POSLE KOGATO TRANZAKCIITE PRIKLUCHAT GI MESTI V DATA FAILOVETE.
+
+Vutre v data i logs failovete informaciqta e podredena i zarpredelena na stranici!
+
+
+
+
+TRQBVA DA SI PUSNEM SQL Server Managment Studio !!!!!!!!!!!!!!!!!!!!!!
+NO AKO NE NI E PRIQTNO DA RABOTIM S MANAGMENT STUDIO MOJEM DA POLZVAME HEIDI KOETO VECHE GO IMAM !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+Tablicite imat kokoni i redove
+V redovete sedat dannite a v kolonite tiput na tezi danni
+S DQSNO KOPCHE VURHU DADEN RED / Create new indice MOJEM DA SETVAME DADENO POLE DA E KLUCH ILI NESHTO DRUGO
+DRUGI INDEXI MOGAT DA SE PRAVAT SUS ZAQVKI.
+
+
+Za da si govorim s ENGINITE I S BAZITE shte polzvame SQL
+Komunikaciqta shte se deli na 4 chasti:
+1. Opisanie na strukturata na dannite
+2. Manipulaciq na danni, zapazvane i izvajdane na danni ot bazata
+3. Data kontrol, kontrol vurhu koi moje da polzva dannite v bazata
+4. Transaction control
+
+NIE SHTE SE KONCENTRIRAME PURVO VURHU PURVITE 2
+
+Svurzvaneto na tablici : 
+Nujno e za da nqma povtarqshta se informaciq ili da nqma prazni poleta v purvata tablica.
+Obedinenieto na tablicite STAVA LESNO SUS SQL EZIKA!
+
+
+S   SELECT * FROM italiancars    selektvame vsichko v tablicata italiancars
+
+SELECT Brand FROM italianCars    // taka vzimame samo markite
+SELECT Model FROM italianCars     // taka selektirame samo modelite
+
+MOJEM DA SVURZVAME TABLICI CHREZ KLUCHOVETE
+
+
+
+Indeksite sa napraveni za po burzo namirane na danni:
+IMA DVA VIDA:
+Clustered index, toi e svurzan s glavniq kluch i fizicheski sudurja informaciqta.
+I OTGOVARQ ZA DATA FAILOVETE
+
+Non-Clustered index, toi moje da e vsqkoe pole i moje da ima poveche ot edin indexi sudurja vruzkata do kude se namira informaciqta. OTGOVARQ ZA LINKS FAILOVETE.
+
+INDEXITE SA RAZPREDELENI KATO DURVEVIDNA STRUKTURA.
+
+
+
+VIEWS - IZGLEDITE MOGAT DA BUDAT MALKO SLOJNI 
+IZGLEDITE V SQL SA PROSTO PAZITELI NA KOD. KATO FUNKCII S DADENO IME
+Chrez izgledite mojem da pgranichim dostupa do bazata danni. Primerno si pravim edno view koeto da sudurja samo dadeni neshta ot bazata i kazvame che iskame vsichki da imat dostup samo do tova view !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Pravi se sus: CREATE VIEW .... END
+
+
+INFORMACIQTA KOQTO IZLIZA KATO REZULTAT PRI SUZDAVANE NA IZGLED NE SE ZAPAZVA NIKADE I PRI VSQKO IZPULNENIE SE PRAVI NOVA ZAQVKA I TOVA NE VLIQE PO NIKAKUV NACHIN NA SURVERA.
+
+
+Proceduri, funkcii i triggeri:
+Mojem da si napravim parcheta kod koito da se izpulnqvat kogato ni e kef na nas.
+
+Procedurite : IZPULNQVAT DADENO DEISTVIE
+Pravi se sus: CREATE PROCEDURE ProcedureName AS BEGIN ... END
+
+Funkciite : Te sa dosta po umni ot procedurite no te trqbva vinagi da vrushtat rezultat i hubavoto e che priemat parametri.
+Pravi se sus: 
+CREATE FUNCTION FunctionName(Params) 
+RETURNS ReturnType 
+AS 
+	BEGIN 
+		... 
+	END
+
+
+
+Trigeri: TE GLEDAT ZA NESHTA KOITO SE SLUCHVAT V BAZATA I REAIGIRAT, KATO MOGAT DA IZVIKAT PROCEDURA ILI FUNKCIQ.
+VIJ V GOOGLE KAK SE PRAVAT MALKO PO TRUDNO E.
+KOGATO IMA GRESHKA NQKUDE, IZPOLZVANETO NA TRIGGERI PRAVI DEBUGVANETO PO TRUDNO ZA TOVA SE PREPORUCHVA DA SE POLZVAT POVECHE PROCEDURI !!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
