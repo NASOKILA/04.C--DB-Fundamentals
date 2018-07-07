@@ -71,14 +71,6 @@ FROM Employees;
 
 SELECT * FROM V_EmployeeNameJobTitle;
 
--- RESHENIE SUS 'CASE' 'WHEN', 'END'
-/*CASE e nachaloto a END e kraq, usvolieto ni 
-sedi v WHEN, to trqbva da vrushta rezultat,
-Mojem da polzvame nqkolko puti WHEN i THEN
-KONSTRUKCIQTA E KATO V SWITCH CASE,
-ELSE e kato DEFAULT:
-*/
-
 CREATE VIEW V_EmployeeNameJobTitle2
 AS 
 SELECT 
@@ -114,9 +106,5 @@ SET Salary = Salary + (Salary * 0.12)
 WHERE DepartmentID IN ( 1, 2, 4, 11 );
 
 SELECT Salary FROM Employees
-
-
---Subquery oznachava zaqvka v druga zaqvka, shte go uchim po napred
-
 
 
