@@ -1,8 +1,6 @@
-
+ 
 --Zadacha 1
 CREATE DATABASE Minions
-
-
 
 --Zadacha 2
 CREATE TABLE Minions
