@@ -3,6 +3,7 @@
 -- Versión del servidor:         10.1.25-MariaDB - mariadb.org binary distribution
 -- SO del servidor:              Win32
 -- HeidiSQL Versión:             9.4.0.5125
+
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
