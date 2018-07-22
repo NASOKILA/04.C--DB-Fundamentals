@@ -1,7 +1,6 @@
 
 CREATE DATABASE Test2;
 
-
 CREATE TABLE Mountains(
 Id INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 Name varchar(50) NOT NULL
@@ -151,6 +150,7 @@ CREATE TABLE Managers(
 	FOREIGN KEY (TeamId)
 	REFERENCES Teams(Id) 
 )
+
 USE Geography
 
 SELECT 
@@ -181,8 +181,6 @@ DELETE FROM Products
 WHERE Name = 'Bread';
 
 SELECT * FROM Store
-
-
 
 CREATE TABLE Owners
 (
