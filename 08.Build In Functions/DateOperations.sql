@@ -1,11 +1,7 @@
 
-
-
 SELECT GETDATE(); 
 
 SELECT DATEPART(YEAR, GETDATE()); 
-
-
 
 USE SoftUni
 SELECT TOP (1000) [EmployeeID]
@@ -42,7 +38,7 @@ SELECT CONVERT(int, 2.56);
 
 SELECT 
 FirstName,
-ISNULL(MiddleName, 'Nqma Sredno Ime !!!'),
+ISNULL(MiddleName, 'No Middle Name'),
 LastName
 FROM Employees
 
