@@ -1,24 +1,15 @@
 
-
-
-
-
-
 --05
-		select p.Name, p.Price, p.Description 
-		from Products as p
-		order by p.Price DESC, p.Name ASC
-
+select p.Name, p.Price, p.Description 
+from Products as p
+order by p.Price DESC, p.Name ASC
 
 --06
-
 select i.name, i.Description, i.OriginCountryId from Ingredients AS i
 WHere i.OriginCountryId IN (1,10,20)
 order by i.Id ASC
 
-
 --07
-
 select TOP (15) 
 		i.Name,
 		i.Description,
@@ -28,10 +19,7 @@ JOIN Countries AS c ON c.Id = i.OriginCountryId
 WHERE c.Name  IN ('Bulgaria', 'Greece')
 ORDER BY i.Name ASC, c.Name ASC
 
-
-
 --08
-
 		select TOP 10
 				p.Name, 
 				p.Description,
@@ -43,10 +31,7 @@ ORDER BY i.Name ASC, c.Name ASC
 		 GROUP BY p.Name, p.Description
 		 ORDER BY AVG(f.Rate) DESC, COUNT(f.Id) DESC
 
-
-
 --09.
-
 		select 
 				 f.ProductId,
 				 f.Rate,
@@ -59,10 +44,7 @@ ORDER BY i.Name ASC, c.Name ASC
 	WHERE f.Rate < 5.0
 	Order by f.ProductId DESC, f.Rate ASC
 
-	
-
 --10.
-
 			select 
 				   CONCAT(c.FirstName, ' ', c.LastName) AS CustomerName,
 				   PhoneNumber,
@@ -79,9 +61,6 @@ ORDER BY i.Name ASC, c.Name ASC
 		from Customers AS c
 		JOIN Feedbacks AS f on f.CustomerId = c.Id
 		JOIN Products AS p on p.Id = f.ProductId
-
-
-
 
 		Select 
 				f.ProductId,
@@ -102,11 +81,7 @@ ORDER BY i.Name ASC, c.Name ASC
 		 WHERE table1.CustomerName = c.FirstName + ' ' + c.LastName
 		 Order BY ProductId, c.FirstName + ' ' + c.LastName, f.Id
 
-
-
-
 --12
-
 		select 
 			   c.FirstName,
 			   c.Age,
@@ -118,12 +93,7 @@ ORDER BY i.Name ASC, c.Name ASC
 		  (cc.Name <> 'Greece' AND SUBSTrING(c.PhoneNumber, 9,2) = 38)
 		  ORDER BY c.FirstName, c.Age DESc
 
-
-
-
-
 	--13.
-		
 		select * from 
 		(select 
 				d.Name As DistributorName,
@@ -140,12 +110,7 @@ ORDER BY i.Name ASC, c.Name ASC
 		) as Table1
 		ORDER BY Table1.DistributorName, Table1.IngredientName, Table1.ProductName
 		
-
-
-
-
 		--14.
-
 		select TOP 1 WITH TIES
 				c.Name,
 				AVG(f.Rate) AS FeedbackRate
@@ -155,9 +120,7 @@ ORDER BY i.Name ASC, c.Name ASC
 		 GROUP BY c.Name
 		 Order BY AVG(f.Rate) DESC
 
-
 		--15
-
 		 select 
 				cc.Name,
 				BestDistributors.DistributorName
@@ -178,13 +141,6 @@ ORDER BY i.Name ASC, c.Name ASC
 		GROUP BY cc.Name, BestDistributors.DistributorName
 		ORDER BY 
 
-
-
-
-		
-		
-
-
 		--16.
 		GO
 		CREATE VIEW v_UserWithCountries
@@ -196,17 +152,10 @@ ORDER BY i.Name ASC, c.Name ASC
 				 c.Name AS CountryName 
 			FROM Countries AS c
 			JOIN Customers AS cc ON cc.CountryId = c.Id
-			
-		
 		GO
-
 		SELECT TOP 5 *
   FROM v_UserWithCountries
  ORDER BY Age
-
-
-
-
 
  --17.
  GO
@@ -215,7 +164,6 @@ ORDER BY i.Name ASC, c.Name ASC
  RETURNS VARCHAR(100)
  BEGIN
 	DECLARE @Result VARCHAR(100);
-
 	
 	IF((
 		Select 
@@ -245,7 +193,6 @@ ORDER BY i.Name ASC, c.Name ASC
 		ELSE 
 			SET @Result = 'No rating'
 
-
 	RETURN @Result;
  END
  GO
@@ -253,8 +200,6 @@ ORDER BY i.Name ASC, c.Name ASC
  SELECT TOP 5 Id, Name, dbo.udf_GetRating(Name)
   FROM Products
  ORDER BY Id
-
-
 
  --18.
  GO
@@ -278,21 +223,12 @@ BEGIN
 	END
 
 	COMMIT;
-	
 END
-
 
  EXEC usp_SendFeedback 1, 5, 7.50, 'Average experience';
 SELECT * FROM Feedbacks WHERE CustomerId = 1 AND ProductId = 5;
 
-
- 
-
-
-
-
  --19.
-
 	GO
 	CREATE TRIGGER TR_Delete_Product_Relations ON Products
 	INSTEAD OF DELETE
@@ -314,7 +250,6 @@ SELECT * FROM Feedbacks WHERE CustomerId = 1 AND ProductId = 5;
 	END
 	GO
 
-
 select * from Products
 
 begin tran
@@ -327,12 +262,7 @@ rollback;
 
 /*FK__ProductsI__Produ__398D8EEE  table ProductsIngredients */
 
-
-
-
-
 --20.
-
 	SELECT 
 		     Table1.ProductName,
 			 Table1.ProductAverageRate,
@@ -358,11 +288,6 @@ rollback;
 				 Table1.DistributorName				 
 		HAVING COUNT(Table1.DistributorName) = 1
 		ORDER BY Table1.ProductId
-
-
-
-
-
 
 		WITH CTE AS 
 	  
@@ -390,5 +315,3 @@ rollback;
 		 ON DistributorCount.ProductName = CTE.ProductName
 		 WHERE DistributorCount = 1
 		 ORDER BY CTE.ProductId
-
-

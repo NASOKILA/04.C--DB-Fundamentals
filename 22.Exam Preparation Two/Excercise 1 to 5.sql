@@ -1,15 +1,4 @@
 
-
-
-
-
-
-/*
-CREATE database Bakery;
-USE Bakery;
-*/
-
-
 CreATE TABLE Countries
 (
 	Id INT PRIMARY KEY IDENTITY,
@@ -40,11 +29,10 @@ CREATE TABLE Feedbacks
 (
 	Id INT PRIMARY KEY IDENTITY,
 	Description NVARCHAR(255),
-	Rate DECIMAL(18,2) CHECK (Rate > 0 AND Rate < 10) NOT NULL, /*not sure*/
+	Rate DECIMAL(18,2) CHECK (Rate > 0 AND Rate < 10) NOT NULL,
 	ProductId INT NOT NULL FOREIGN KEY REFERENCES Products(Id),
 	CustomerId INT NOT NULL FOREIGN KEY REFERENCES Customers(Id)
 )
-
 
 CREATE TABLE Distributors
 (
@@ -64,7 +52,6 @@ CREATE TABLE Ingredients
 	DistributorId INT FOREIGN KEY REFERENCES Distributors(Id)
 )
 
-
 CREATE TABLE ProductsIngredients
 (
 	ProductId INT FOREIGN KEY REFERENCES Products(Id) NOT NULL,
@@ -72,9 +59,7 @@ CREATE TABLE ProductsIngredients
 	CONSTRAINT PK_Products_Ingredients PRIMARY KEY (ProductId, IngredientId)
 )
 
-
 --Insert
-
 INSert INto Distributors(Name, CountryId, AddressText, Summary)
 VALUES
 ('Deloitte & Touche', 2, '6 Arch St #9757', 'Customizable neutral traveling'),
@@ -94,15 +79,10 @@ VALUES
 ('Hiu', 'Portaro', 25, 'M', '0068277755', 16),
 ('Josefa', 'Opitz', 43, 'F', '0197887645', 17)
 
-
-
-
 --Update
-
 UPDATE Ingredients
 SET DistributorId = 35
 WHERE Id IN (3, 23, 26);
-
 
 UPDATE Ingredients
 SET OriginCountryId = 14
@@ -111,18 +91,9 @@ WHERE OriginCountryId = 8;
 select * from Ingredients
 WHERE Id IN (3, 23, 26);
 
-
-
-
-
-
-
 --delete
-
 DELETE FROM Feedbacks
 WHERE ProductId = 5
 
 DELETE FROM Feedbacks
 WHERE CustomerId = 14
-
-
