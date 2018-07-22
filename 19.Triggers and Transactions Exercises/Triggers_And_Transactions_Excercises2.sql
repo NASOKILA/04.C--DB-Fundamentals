@@ -1,9 +1,7 @@
 
-
 USE Bank;
 
 --01. Create Table Logs
-
 CREATE TABLE Logs
 (
 	LogId INT PRIMARY KEY IDENTITY(1,1),
@@ -29,7 +27,6 @@ BEGIN
 END
 GO
 
---Testvame
 UPDATE Accounts
 SET Balance -= 100
 WHERE Id = 2;
@@ -51,7 +48,6 @@ CREATE TRIGGER TR_LogsNewEmail ON Logs
 AFTER INSERT
 AS
 BEGIN
-	
 	DECLARE @Recipient INT = 
 	(SELECT AccountId FROM inserted); 
 	
@@ -71,20 +67,13 @@ BEGIN
 END
 GO
 
---TESTVAME:
 UPDATE Accounts
 SET Balance -= 10
 WHERE Id = 1;
---Kato updeitnem vkarvame danni v logs tablicata i 
---suotvetno vkarvame v NotificationEmails
 
 select * from Accounts
 select * from Logs
 select * from NotificationEmails
-
-
-
-
 
 --03. Deposit Money
 GO
@@ -104,19 +93,14 @@ BEGIN
 END 
 GO
 
---Testvame:
 EXEC dbo.usp_DepositMoney 1, -20;
 select * from Accounts
-
-
-
 
 --04. Withdraw Money Procedure
 GO
 CREATE PROC usp_WithdrawMoney (@AccountId INT, @MoneyAmount DECIMAL(16,4)) 
 AS
 BEGIN
-
 	BEGIN TRAN
 
 	IF(@MoneyAmount < 0 )
@@ -141,7 +125,6 @@ BEGIN
 	
 END
 
---Testvame:
 EXEC dbo.usp_WithdrawMoney 1, -25000;
 EXEC dbo.usp_WithdrawMoney 1, 25000;
 EXEC dbo.usp_WithdrawMoney 1, 25;
@@ -150,12 +133,10 @@ EXEC dbo.usp_WithdrawMoney 1, 25;
 SELECT * FROM Accounts
 
 --05. Money Transfer
-
 GO
 CREATE PROC usp_TransferMoney(@SenderId INT, @ReceiverId INT, @Amount DeCIMAL(18,4))  
 AS
 BEGIN
-	
 	IF(@Amount < 0)
 	BEGIN
 		RAISERROR('Cannot withdraw an amount less htan zero !', 16, 2)
@@ -177,31 +158,17 @@ BEGIN
 	UPDATE Accounts
 	SET Balance += @Amount
 	WHERE Id = @ReceiverId;
-	
 END
 GO
 
---We test it
 EXEC dbo.usp_TransferMoney 1, 2, -14000; 
-
 EXEC dbo.usp_TransferMoney 2, 1, 14000;
-
 EXEC dbo.usp_TransferMoney 2, 1, 140;
-
 select * from Accounts
-
-
-
 
 --06 Trigger
 USE Diablo;
 CREATE TRIGGER TR_DiabloDatabase TO 
-
-
-
-
-
---07. *Massive Shopping
 
 --08. Employees with Three Projects
 USE SoftUni;
@@ -221,24 +188,18 @@ BEGIN
 		RETURN;
 	END
 
-
 	INSERT INTO EmployeesProjects
 	VALUES
 	(@EmloyeeId, @ProjectId );
-
 
 	COMMIT;
 END
 GO 
 
---Testvame:
 EXEC dbo.usp_AssignProject 250, 5;
 
 SELECT * FROM EmployeesProjects
 WHERE EmployeeID = 250;
-
-
-
 
 --09. Delete Employees
 CREATE TABLE Deleted_Employees
@@ -252,14 +213,11 @@ CREATE TABLE Deleted_Employees
 	Salary MONEY
 )
 
-
 GO
 CREATE OR ALTER TRIGGER TR_FireEmployees ON Employees
 AFTER DELETE
 AS
 BEGIN
-	
-	--VAJNO !!! Mojem da Insertvame prosto sus select !!!!!!!!!!!
 	INSERT INTO Deleted_Employees(FirstName, LastName, MiddleName,
 			   JobTitle, DepartmentID, Salary)
 		SELECT FirstName, LastName, MiddleName,
@@ -268,24 +226,13 @@ BEGIN
 END
 GO
 
---Test it, delete some employee and see if it goes in the Deleted_Employees tabke
 DELETE FROM Employees
 WHERE EmployeeID IN (50,55,60);
 
-
 DELETE FROM Deleted_Employees
-
 select * from Deleted_Employees
-
-
 select * from Employees
 WHERE EmployeeID = 56;
-
-
-
-
-
-
 
 INSERT INTO Deleted_Employees
 	VALUES
@@ -298,35 +245,3 @@ INSERT INTO Deleted_Employees
 	(select DepartmentID from deleted),
 	(select Salary from deleted)
 	)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

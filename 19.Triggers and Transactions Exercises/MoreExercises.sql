@@ -1,23 +1,8 @@
 
-
---19. *Cash in User Games Odd Rows
-
-
---
-
-
-
-
-
-
 --22. Number of Users for Email Provider
-
 select * from Users
 
-
-
 --23. All User in Games
-
 select 
 	g.Name AS Game,
 	gt.Name AS [Game Type],
@@ -36,11 +21,7 @@ JOIN Characters AS c
 ON c.Id = ug.CharacterId
 Order by ug.Level DESC, u.Username, g.Name;
 
-
-
-
 --24. Users in Games with Their Items
-
 select 
 	u.Username,
 	g.Name, 
@@ -59,15 +40,8 @@ GROUP BY u.Username, g.Name
 HAVING Count(i.Id) >= 10
 ORDER BY Count(i.Id) DESC, SUM(i.Price) DESC, u.Username;
 
-
-
---25. * User in Games with Their Statistics
-
-
 --26. All Items with Greater than Average Statistics
 --use Diablo
-
---RABOTI NO NE TRUGVA V JUDJE
 select  
 	i.Name, 
 	i.Price,
@@ -92,9 +66,7 @@ ORDER BY i.Name;
 (select AVG(Luck) FROM [Diablo].[dbo].[Statistics]) 
 (select AVG(Speed) FROM [Diablo].[dbo].[Statistics]) 
 
-
 --27. Display All Items with Information about Forbidden Game Type
-
 	select 
 		i.Name AS Item, 
 		i.Price, 
@@ -107,10 +79,8 @@ ORDER BY i.Name;
 	ON gt.Id = gtfi.GameTypeId 
 	ORDER BY gt.Name DESC, i.Name;
 
-
 	--29. Peaks and Mountains
 	--use Geography
-
 	Select 
 		p.PeakName,
 		m.MountainRange,
@@ -120,9 +90,7 @@ ORDER BY i.Name;
 	ON m.Id = p.MountainId
 	Order by Elevation DESC, PeakName
 
-
 	--30. Peaks with Mountain, Country and Continent
-	
 	Select 
 		p.PeakName,
 		m.MountainRange AS Mountain,
@@ -139,11 +107,7 @@ ORDER BY i.Name;
 	ON cc.ContinentCode = c.ContinentCode
 	Order by PeakName, ContinentName
 	
-
-
-
 	--31. Rivers by Country
-
 	select 
 		c.CountryName,
 		cc.ContinentName,
@@ -163,11 +127,7 @@ ORDER BY i.Name;
 	GROUP BY c.CountryName, cc.ContinentName
 	ORDER BY COUNT(r.Id) DESC, [TotalLength] DESC, c.CountryName
 
-
-
-
 	--32. Count of Countries by Currency
-
 	select 
 		c.CurrencyCode,
 		c.Description AS Curency,
@@ -178,13 +138,8 @@ ORDER BY i.Name;
 	GROUP BY c.CurrencyCode, c.Description
 	ORDER BY Count(cc.CountryName) DESC, c.Description 
 
-
-
-
-
 	--33. Population and Area by Continent
 	--use Geography
-	
 	select 
 		cc.ContinentName,
 		SUM(c.AreaInSqKm) AS CountriesArea,
@@ -195,12 +150,7 @@ ORDER BY i.Name;
 	GROUP BY cc.ContinentName
 	ORDER BY SUM(CAST(Population AS decimal(10))) DESC
 
-
-
-
-
 	--34. Monasteries by Country
-
 	CREATE TABLE Monasteries
 	(
 		Id INT PRIMARY KEY IDENTITY,
@@ -227,13 +177,3 @@ ORDER BY i.Name;
 ('Pa-Auk Forest Monastery', 'MM'),
 ('Taktsang Palphug Monastery', 'BT'),
 ('Sümela Monastery', 'TR')
-
-
-
-
-
-
-
-
-
-
