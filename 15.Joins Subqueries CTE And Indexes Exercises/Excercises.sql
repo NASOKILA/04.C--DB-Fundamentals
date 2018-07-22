@@ -1,9 +1,5 @@
 
-
-
-
 --01. Employee Address
-
 SELECT top(5)
 e.EmployeeID, e.JobTitle, e.AddressID, a.AddressText
 FROM Employees AS e
@@ -11,11 +7,7 @@ JOIN Addresses AS a
 ON e.AddressID = a.AddressID
 Order by e.AddressID
 
-
-
-
 --02. Addresses with Towns
-
 SELECT top (50)
 	FirstName, 
 	LastName,
@@ -28,11 +20,7 @@ from Employees AS e
 	ON a.TownID = t.TownID
 ORDER BY FirstName, LastName;
 
-
-
-
 --03. Sales Employees
-
 SELECT 
 	EmployeeID, 
 	FirstName, 
@@ -43,11 +31,7 @@ FROM Employees AS e
 	ON e.DepartmentID = d.DepartmentID
 WHERE(d.Name = 'Sales');
 
-
-
-
 --04. Employee Departments
-
 	SELECT TOP (5) 
 		e.EmployeeID,
 		e.FirstName,
@@ -59,11 +43,7 @@ WHERE(d.Name = 'Sales');
 	WHERE e.Salary > 15000
 	ORDER BY d.DepartmentID;
 
-
-
-
 --05. Employees Without Projects
-
 	select top (3) 
 			   t1.EmployeeID, 
 			   t1.EmployeeWithNoProject AS FirstName 
@@ -77,22 +57,7 @@ WHERE(d.Name = 'Sales');
 		 WHERE t1.EmployeeWithNoProject <> 'Has Project'
 	  ORDER BY t1.EmployeeID
 
-	/*
-		Vzeh vsichki prisustvashti IDta ot EmployeesProjects tablicaca s edno malko query.
-		Posle selektiram ot Employees i kazvam v edin CASE END ako tekushtiq rabotnik
-		ne e v tova query KOETO SEGA STAVA NA SUBQUERY, da izpishe 'Has Project', 
-		zashtoto tova znachi che tozi rabotnik ima proekt,
-		inache pishem imeto na rabotnika I CQLOTO TOVA NESHTO VLIZA E EDNO QUERY KOETO 
-		SEGA STAVA SUBQUERY S IME t1.
-		I posledno ot t1 vzimame top (3) t1.EmployeeID, t1.EmployeeWithNoProject KUDETO
-		t1.EmployeeWithNoProject != 'Has Project' !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	*/
-
-
-
-
 --06. Employees Hired After
-
 SELECT
 	e.FirstName,
 	e.LastName,
@@ -105,10 +70,7 @@ WHERE e.HireDate > '1991-01-01 00:00:00'
 AND (d.Name = 'Sales' OR d.Name = 'Finance')
 ORDER BY e.HireDate
 
-
-
 --07. Employees With Project
-
 SELECT TOP (5)
 	e.EmployeeID, 
 	e.FirstName, 
@@ -121,11 +83,7 @@ ON ep.ProjectID = p.ProjectID
 WHERE (p.EndDate IS NULL AND p.StartDate > CAST('2002-08-13 00:00:00' AS Date))
 ORDER BY EmployeeID
 
-
-
-
 --08. Employee 24
---Vmesto da kastvam i da polzvam DATEPART() moga prosto da napisha < '2005-01-01'
 SELECT 
 	e.EmployeeID, 
 	e.FirstName,	
@@ -141,10 +99,7 @@ FROM Employees AS e
 	ON ep.ProjectID = p.ProjectID
 WHERE (e.EmployeeID = 24)
 
-
-
 --09. Employee Manager
-
 SELECT
 	e.EmployeeID,
 	e.FirstName,
@@ -156,11 +111,7 @@ ON m.EmployeeID = e.ManagerID
 WHERE m.EmployeeID = 3 OR m.EmployeeID = 7
 ORDER BY e.EmployeeID
 
-
-
-
 --10. Employees Summary
-
 SELECT TOP (50)
 	e.EmployeeID,
 	e.FirstName + ' ' + e.LastName AS EmployeeName,
@@ -173,15 +124,8 @@ JOIN Departments AS d
 ON e.DepartmentID = d.DepartmentID
 ORDER BY EmployeeID
 
-
-
-
 --11. Min Average Salary
-
---find the lowest average slary for each deprtment
---find the lowest of all of them
-
-select 
+select
 	MIN(t1.AVGSalaryPerDepartment) AS MinAverageSalary
 	from 
 (
@@ -191,16 +135,8 @@ FROM Employees
 Group by DepartmentID
 ) AS t1
 
-
-
-
 --12. Highest Peaks in Bulgaria
-
 --Use Geography
-
---Realno nie mojem da si spestim JOIN-a na Mountains i direktno
---s MountainId da se svurje kum Peaks MountainId
-
 select 
 	c.CountryCode,
 	m.MountainRange,
@@ -216,11 +152,7 @@ from Countries AS c
 WHERE c.CountryCode = 'BG' AND p.Elevation > 2835
 ORDER BY p.Elevation DESC;
 
-
-
-
 --13. Count Mountain Ranges
-
 SELECT 
 	c.CountryCode,
 	COUNT(m.MountainRange) AS MountainRanges
@@ -232,11 +164,7 @@ ON mc.MountainId = m.Id
 GROUP BY c.CountryCode
 HAVING c.CountryCode = 'BG' OR c.CountryCode = 'RU' OR c.CountryCode = 'US'
 
-
-
-
 --14. Countries With or Without Rivers
-
 select top 5
 		c.CountryName,
 		r.RiverName
@@ -248,16 +176,9 @@ select top 5
 	WHERE c.ContinentCode = 'AF'
 ORDER BY c.CountryName;
 
-
-
 --15.*Continents and Currencies
-
 --Find all continents and their most used currency
-
 --1. find most used currency for one Continent
-
-	
-
 	select 
 		usages.ContinentCode, 
 		usages.CurrencyCode, 
@@ -285,14 +206,7 @@ ORDER BY c.CountryName;
 	AND usages.Usage = maxUsages.maxUsed
 	ORDER BY usages.ContinentCode;
 
-	--NAPRAVIHME DVE ZAQVKI I GI JOINAHME za da selektirme tova koeto ni trqbva
-
-	--VTOROTO RESHENIE e S DENSE_RANK() koeto sortira po counta na 
-	--valutite kato dobavim partition continenCode
-
-
 --16.Countries without any Mountains
-
 select (COUNT (*) -
 	(
 		select 
@@ -302,13 +216,8 @@ select (COUNT (*) -
 		ON mc.CountryCode = c.CountryCode
 	)) AS CountryCode
 from Countries AS cc
---vzeh broq na tezi durjavi koito imat planini i izvadih tova chislo ot broq na vsichki durjavi !!!!!!
-
-
-
 
 --17. Highest Peak and Longest River by Country
-
 select top 5
 	c.CountryName,
 	MAX(p.Elevation) AS HiestPeakElevation,
@@ -326,7 +235,3 @@ from Countries AS c
 	ON r.Id = cr.RiverId
 GROUP BY c.CountryName
 ORDER BY HiestPeakElevation DESC, LongestRiverLength DESC, c.CountryName
-
---Mountains JOINa mojme i da go mahnem
---STAVA I NAVSQKUDE S FULL JOIN 
-

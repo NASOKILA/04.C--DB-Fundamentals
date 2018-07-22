@@ -1,11 +1,6 @@
 
-
-
-
---Excercises:
-
+--Exercises:
 --01. Employee Address
-
  SELECT TOP 5
 			e.EmployeeID,
 			e.JobTitle,
@@ -15,7 +10,6 @@
 	   JOIN Addresses AS a
 		 ON e.AddressID = a.AddressID
    ORDER BY e.AddressID 
-
 
 --04. Employee Departments
 SELECT TOP 5 
@@ -29,9 +23,7 @@ INNER JOIN Departments AS d
   	 WHERE e.Salary > 1500
   ORDER BY e.DepartmentID ASC;
 
-
 --05. Employees Without Projects
-
 SELECT TOP 3 
 		   e.EmployeeID,
 	   	   e.FirstName 
@@ -40,7 +32,6 @@ SELECT TOP 3
                                from EmployeesProjects
 						   Group by EmployeeID ) 
   ORDER BY e.EmployeeID;
-
 
 --07
 SELECT TOP 5
@@ -55,11 +46,8 @@ SELECT TOP 5
 	 WHERE p.StartDate > CAST('2002-08-13 00:00:00' AS Date) 
 	   AND p.EndDate IS NULL
 	 ORDER BY e.EmployeeID;
-
-
-
+	 
 --08. Employee 24
-	
 	SELECT e.EmployeeID,
 	   	   e.FirstName,
       CASE
@@ -74,9 +62,7 @@ SELECT TOP 5
 	    ON ep.ProjectID = p.ProjectID
 		WHERE e.EmployeeID = 24;
 
-
 --09. Employee Manager
-
 	SELECT e.EmployeeID,
 		   e.FirstName,
 		   e.ManagerID,
@@ -87,11 +73,7 @@ SELECT TOP 5
 	 WHERE e.ManagerID IN (3, 7)
   ORDER BY e.EmployeeID;
 
-
-
-
 --11. Min Average Salary
-
 	 SELECT 
 		MIN (AverageSalary) AS MinAverageSalary
 	   FROM (SELECT 
@@ -99,11 +81,7 @@ SELECT TOP 5
 			   FROM Employees AS e
 		   GROUP BY DepartmentID) AS DepartmentAverageSalaries
 
-	
-
-
 --12. Highest Peaks in Bulgaria
-
 Use Geography;
 
 	  SELECT c.CountryCode,
@@ -124,10 +102,7 @@ Use Geography;
 							    WHERE CountryName = 'Bulgaria')
 	ORDER BY p.Elevation DESC
 
-
-
 --13. Count Mountain Ranges
-
 	SELECT c.CountryCode,
 		   COUNT(m.MountainRange) AS MountainRanges
 	  FROM Countries AS c
@@ -141,11 +116,7 @@ Use Geography;
 							   IN ('United States', 'Russia', 'Bulgaria'))
 	GROUP BY c.CountryCode 
 
-
-	
-
 --14. Countries And Rivers
-
 SELECT TOP 5 
 		   c.CountryName,
 		   r.RiverName 
@@ -158,12 +129,8 @@ SELECT TOP 5
 								FROM Continents
 							   WHERE ContinentName = 'Africa')
   ORDER BY c.CountryName ASC;
-
-
-
-
+  
 --15. *Continents and Currencies
-
  select 
 		usages.ContinentCode, 
 		usages.CurrencyCode, 
@@ -191,12 +158,7 @@ SELECT TOP 5
 	AND usages.Usage = maxUsages.maxUsed
 	ORDER BY usages.ContinentCode;
 
-
-
-
 --16. Countries Without any Mountains
-
-
 	SELECT COUNT(*) AS CountryCode FROM
 	(SELECT c.CountryCode 
 	   FROM Countries AS c
@@ -206,10 +168,7 @@ SELECT TOP 5
 		 ON m.Id = mc.MountainId
 		 WHERE m.MountainRange IS NULL) AS Subquery
 	
-
-
 --17. Highest Peak and Longest River by Country
-	
 SELECT TOP 5
 		   c.CountryName,
 		   MAX(p.Elevation) AS HighestPeakElevation,
@@ -228,11 +187,7 @@ SELECT TOP 5
   GROUP BY c.CountryName
   ORDER BY MAX(p.Elevation) DESC
  
-
-
 --18. *Highest Peak Name and Elevation by Country
-
-
 SELECT TOP 5
 	   CountryName, 
   CASE 
@@ -265,31 +220,3 @@ SELECT TOP 5
 		   )AS AllPeaks) AS Table1
 WHERE [Rank] = 1
 ORDER BY CountryName, [Highest Peak Name];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
