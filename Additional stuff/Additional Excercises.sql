@@ -1,14 +1,11 @@
 
-
 --1. Number of Users for Email Provider
-
 SELECT 
 	  SUBSTRING(Email, CHARINDEX('@', Email) + 1, 100) [Email Provider],
 	  COUNT(*) AS [Number Of Users]
 FROM Users
 GROUP BY SUBSTRING(Email, CHARINDEX('@', Email) + 1, 100)
 ORDER BY COUNT(*)  DESC, SUBSTRING(Email, CHARINDEX('@', Email) + 1, 100) ASC
-
 
 --02. All Users in Games
 SELECT 
@@ -29,8 +26,6 @@ SELECT
 	ON ug.CharacterId = c.Id
  ORDER BY ug.Level DESC, u.Username, g.Name;
 
-
- 
  --03. Users in Games with Their Items
  SELECT 
 	   u.Username,
@@ -50,9 +45,7 @@ SELECT
 HAVING COUNT(i.Id) >= 10 
  ORDER BY COUNT(i.Id) DESC, SUM(i.Price) DESC, u.Username;
 
-
  --04. * User in Games with Their Statistics
-
 
  --05. All Items with Greater than Average Statistics
  SELECT
@@ -84,10 +77,7 @@ HAVING COUNT(i.Id) >= 10
 	) 
 	ORDER BY i.Name
 
-	
-
 --06. Display All Items about Forbidden Game Type
-
 	SELECT 
 		   i.Name,
 		   i.Price,
@@ -100,11 +90,7 @@ HAVING COUNT(i.Id) >= 10
 	    ON gtfi.GameTypeId = gt.Id
 		ORDER BY gt.Name DESC, i.Name ASC;
 
-
-
 -- 07. Buy Items for User in Game
-
-
 
 --08. Peaks and Mountains
 	SELECT 
@@ -116,11 +102,7 @@ HAVING COUNT(i.Id) >= 10
 	    ON m.Id = p.MountainId
   ORDER BY p.Elevation DESC, p.PeakName
 
-
-
-
 --09. Peaks with Mountain, Country and Continent
-
 	SELECT 
 		   p.PeakName,
 		   m.MountainRange,
@@ -137,10 +119,7 @@ HAVING COUNT(i.Id) >= 10
 	    ON c.ContinentCode = cc.ContinentCode
   ORDER BY p.PeakName, c.CountryName;
 	  		
-
-
 --10. Rivers by Country
-	
 	SELECT 
 		   c.CountryName,
 		   cc.ContinentName,
@@ -160,10 +139,7 @@ HAVING COUNT(i.Id) >= 10
   GROUP BY c.CountryName, cc.ContinentName
   ORDER BY COUNT(r.Id) DESC, SUM(r.Length) DESC, c.CountryName ASC
 
-
-
 --11. Count of Countries by Currency
-
 		SELECT 
 			   c.CurrencyCode,
 			   c.[Description] AS Currency,
@@ -176,9 +152,7 @@ HAVING COUNT(i.Id) >= 10
 		  FROM Currencies AS c
 	  ORDER BY NumberOfCountries DESC, c.[Description] ASC
 
-
 --12. Population and Area by Continent
-
 	SELECT 
 		   c.ContinentName,
 		   (
@@ -194,11 +168,7 @@ HAVING COUNT(i.Id) >= 10
       FROM Continents AS c
   ORDER BY CountriesPopulation DESC
 
-
-
-
 --13. Monasteries by Country
-
 --part 1
 CREATE TABLE Monasteries
 (
@@ -207,7 +177,6 @@ CREATE TABLE Monasteries
 	CountryCode CHAR(2) FOREIGN KEY
 	REFERENCES Countries(CountryCode)
 )
-
 
 --part 2
 	INSERT INTO Monasteries(Name, CountryCode) VALUES
@@ -230,12 +199,10 @@ CREATE TABLE Monasteries
 ('Taktsang Palphug Monastery', 'BT'),
 ('Sümela Monastery', 'TR')
 	
-
 --part 3
 ALTER TABLE Countries
 ADD IsDeleted BIT NOT NULL DEFAULT 0;
  
-
  --part 4
 		UPDATE Countries
 		SET IsDeleted = 1
@@ -253,9 +220,7 @@ ADD IsDeleted BIT NOT NULL DEFAULT 0;
 	  HAVING COUNT(r.Id) > 3) AS table2
 		)
 
-
 --part 5
-
 	SELECT 
 	       m.Name,
 		   c.CountryName
@@ -265,16 +230,11 @@ ADD IsDeleted BIT NOT NULL DEFAULT 0;
 		WHERE c.IsDeleted = 0
 		ORDER BY m.Name;
 
-
-
-
 --14. Monasteries by Continents and Countries
-
 --part 1
 UPDATE Countries
 SET CountryName = 'Burma'
 WHERE CountryName = 'Myanmar'
-
 
 --part 2
 INSERT INTO Monasteries
@@ -282,13 +242,11 @@ VALUES
 ('Hanga Abbey', (select CountryCode 
 				  from Countries where CountryName = 'Tanzania'))
 
-
 --part 3
 INSERT INTO Monasteries
 VALUES
 ('Myin-Tin-Daik', (select CountryCode 
 				  from Countries where CountryName = 'Myanmar'))
-
 
 --part 4
 	SELECT cc.ContinentName,
@@ -301,5 +259,3 @@ VALUES
 	    ON cc.ContinentCode = c.ContinentCode
   GROUP BY cc.ContinentName, c.CountryName
   ORDER BY COUNT(m.Id) DESC, c.CountryName ASC		    
-
-	
