@@ -1,9 +1,4 @@
 
-
-
---  VAJNOOOOO !!!          set dateformat mdy
-
-
 INSERT INTO Employees(FirstName, LastName, Gender, Birthdate, DepartmentId)
 VALUES
 ('Marlo', 'O’Malley', 'M', '9/21/1958', 1),
@@ -19,20 +14,13 @@ VALUES
 ((SELECT Id FROM Categories WHERE Name = 'Dangerous Building'), (SELECT Id FROM Status WHERE Label = 'in progress'), '09/07/2015', NULL, 'Falling bricks on Str.58', 5, 2),
 ((SELECT Id FROM Categories WHERE Name = 'Streetlight'), (SELECT Id FROM Status WHERE Label = 'completed'), '07/03/2017', '07/06/2017', 'Cut off streetlight on Str.11', 1,1)
 
-
-
-
 --03 
-
 UPDATE Reports
 SET StatusId = 2
 WHERE StatusId = 1 AND CategoryId = 4
 
-
 SELECT COUNT(*) FROM Reports
 WHERE StatusId = 2 AND CategoryId = 4;
-
-
 
 --04
 select * from Status
@@ -42,23 +30,6 @@ DELETE FROM Reports WHERE StatusId = 4
 
 begin tran
 
-
 --05
 select Username, Age from Users
 Order by Age, Username desc
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

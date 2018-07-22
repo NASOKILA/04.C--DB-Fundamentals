@@ -24,7 +24,6 @@ VALUES(1, 'Infrastructure'), (2, 'Aged Care'), (3, 'Legal'), (4, 'Emergency'), (
 
 SET IDENTITY_INSERT Departments OFF;
 
-
 --INSERT Categories
 SET IDENTITY_INSERT Categories ON;
 
