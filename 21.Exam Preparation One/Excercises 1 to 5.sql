@@ -1,8 +1,5 @@
 
-
-
 --01. DDL
-
 CREATE DATABASE WMS;
 
 USE WMS;
@@ -14,7 +11,6 @@ CREATE TABLE Clients
 	LastName VARCHAR(50) NOT NULL,
 	Phone CHAR(12) NOT NULL,	
 )
-
 
 CREATE TABLE Mechanics
 (
@@ -51,7 +47,6 @@ CREATE TABLE Orders
 	Delivered BIT NOT NULL DEFAULT 0
 )
 
-
 CREATE TABLE Vendors
 (
 	VendorId INT NOT NULL PRIMARY KEY IDENTITY(1,1),
@@ -84,12 +79,7 @@ CREATE TABLE PartsNeeded
 	CONSTRAINT PK_Jobs_Parts PRIMARY KEY (JobId, PartId)
 )
 
-
 --Part two: Import the data from the DataSet File we have from the resourses.
-
-
-
-
 --02.Insert:
 INSERT INTO Clients(FirstName, LastName, Phone)
 VALUES
@@ -124,10 +114,7 @@ VALUES
 													  WHERE v.Name = 'Qingdao Technology'
 													))	
 													
-
-
 --03. Update
-
 UPDATE Jobs
 SET Status = 'In Progress'
 WHERE MechanicId IS NULL
@@ -136,47 +123,9 @@ UPDATE Jobs
 SET MechanicId = 3
 WHERE MechanicId IS NULL
 
-
-
 --04. Delete
-
 DELETE FROM  OrderParts
 WHERE OrderId = 19;
 
 DELETE FROM Orders
 WHERE OrderId = 19;
-
-
-
---05. Part 1: Run the DataSet File again to start over AND USE A NEW QUERY WINDOW.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

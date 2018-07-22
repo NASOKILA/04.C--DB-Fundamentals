@@ -1,7 +1,4 @@
 
-
-
-
 use WMS;
 
 --05. Part 2 Clients by Name
@@ -11,8 +8,6 @@ use WMS;
 	  FROM Clients AS c
   ORDER BY c.LastName ASC, ClientId ASC
 
-
-
 --06. Job Status
 	SELECT 
 		   j.Status, 
@@ -20,8 +15,6 @@ use WMS;
 	  FROM Jobs AS j
 	 WHERE Status <> 'Finished'
 	 ORDER BY j.IssueDate ASC , j.JobId ASC
-
-
 
 --07. Mechanic Assignments
 	  SELECT 
@@ -33,9 +26,6 @@ use WMS;
 	      ON j.MechanicId = m.MechanicId
 	ORDER BY m.MechanicId, j.IssueDate, j.JobId
 
-
-
-
 --08. Current Clients
 	 SELECT 
 			c.FirstName + ' ' + c.LastName AS Client, 
@@ -46,12 +36,7 @@ use WMS;
 	     ON j.ClientId = c.ClientId
 	  WHERE j.Status <> 'Finished'
 
-
-	
-
 --09. Mechanic Performance
-	
-	
 		  SELECT 		 
 				 m.FirstName + ' ' + m.LastName AS Mechanic,
 				 AVG( DATEDIFF(DAY, j.IssueDate, FinishDate))AS [Average Days]
@@ -62,11 +47,7 @@ use WMS;
 		GROUP BY m.FirstName + ' ' + m.LastName, m.MechanicId 
 		ORDER BY m.MechanicId;
 	
-
-
-
 --10. Hard Earners
-
 	SELECT TOP 3
 		   	 m.FirstName + ' ' + m.LastName AS Mechanic,
 			 COUNT(j.Status) AS Jobs
@@ -78,10 +59,7 @@ use WMS;
 	 HAVING COUNT(j.Status) > 1
 	 ORDER BY COUNT(j.Status) DESC, m.MechanicId ASC		  
 
-
-
 --11. Available Mechanics
-
 		 SELECT m.FirstName + ' ' + m.LastName AS Mechanic
 		   FROM Mechanics AS m
 		  WHERE m.MechanicId NOT IN (SELECT j.MechanicId 
@@ -90,16 +68,7 @@ use WMS;
 									   AND MechanicId IS NOT NULL)
 		  ORDER BY m.MechanicId
 
-
-
-
-
---12. Parts Cost
-		 
-		 
-		 
-		 --PONQKOGA V TESTOVETE ISKA '0' A NASHETO NE DAVA REZULTAT
-		 --ZATOVE GO SLAGAME V CASE END STATEMENT		
+--12. Parts Cost		
 		  SELECT 
 				 CASE
 					WHEN (SUM(p.Price * op.Quantity) IS NULL)
@@ -118,9 +87,7 @@ use WMS;
 			  
 
 
---13.	Past Expenses
-
-		
+--13.	Past Expenses	
 			  SELECT j.JobId,
 					CASE
 						WHEN (SUM(p.Price * op.Quantity) IS NULL)
@@ -139,9 +106,7 @@ use WMS;
 			  ORDER BY SUM(p.Price) DESC, JobId ASC;
 			  
 
-
---14.	Model Repair Time
-
+--14.Model Repair Time
 		SELECT 
 			 j.ModelId,
 			 m.Name,
@@ -157,11 +122,7 @@ use WMS;
 	GROUP BY j.ModelId, m.Name
 	ORDER BY AVG(DATEDIFF(DAY, j.IssueDate, j.FinishDate)) ASC
 		
-				
-
-
 --15. Faultiest Model
-
 	SELECT TOP 1
     	 m.Name,
 		 COUNT(*) AS [Times Serviced],
@@ -176,14 +137,8 @@ use WMS;
 	ON j.ModelId = m.ModelId
 	GROUP BY m.Name, m.ModelId
 	ORDER BY COUNT(*) DESC
-	
-
-
-
 
 --16. Missing Parts
-
-
 		 SELECT p.PartId,
 			    p.Description,
 				SUM(pn.Quantity) AS Required,
@@ -198,9 +153,6 @@ use WMS;
 			GROUP BY p.PartId, p.Description
 			HAVING SUM(pn.Quantity) > AVG(p.StockQty) + ISNULL(SUM(op.Quantity), 0)
 			ORDER BY p.PartId
-
-
-
 
 --17.Cost of Order
 GO
@@ -241,9 +193,6 @@ GO
 
 select dbo.udf_GetCost(3)
 
-
-
-
 --18. Place Order
 GO
 CREATE PROC usp_PlaceOrder 
@@ -258,14 +207,7 @@ select * from Orders AS o
 JOIN Jobs AS j ON j.JobId = o.JobId
 WHEre o.JobId = 1
 
-
-
 select * from Orders
-
-
-
-
-
 
 --19.	Detect Delivery
 GO
@@ -273,27 +215,19 @@ CREATE TRIGGER TR_DeliveryDetector ON Orders
 AFTER UPDATE
 AS
 BEGIN
-		
 		IF((select Delivered from deleted) = 0 AND (select Delivered from inserted) = 1)
 			BEGIN 
 					
-					/*Idto na parcheto i poruchkata i stokata koqto trqbva da insertnem v stockquantity na tov parche*/
-				   SELECT *
+					SELECT *
 					FROM OrderParts AS op
 				   WHERE OrderId IN (select OrderId from inserted)
 				   
-
-				   
-					/*/*Parchetata koito trqbva da mu updeitnem stokata*/
 					select * from Parts
 					where PartId IN (select PartId 
 									from OrderParts 
 									where OrderId = (select OrderId 
 													 from inserted))
-					*/
 					
-				  
-				 /*Samo quantities koito trqbva da dobavim kum stokata*/ 
 				DECLARE @QuantityOfOrderedParts TABLE(
 					PartId INT NOT NULL,
 					Quantity INT NOT NULL
@@ -304,8 +238,6 @@ BEGIN
 					FROM OrderParts AS op
 				   WHERE OrderId IN (select OrderId from inserted)
 			
-				
-				/*Idtata na koito trqbva da dobavim qunatities*/
 				DECLARE @PartIdsOfOrderedParts TABLE (
 					PartId INT NOT NULL
 				)
@@ -314,39 +246,24 @@ BEGIN
 					from OrderParts 
 					where OrderId IN (select OrderId from inserted)
 			
-
-					
-			
-					/*Updeitvame si stokata*/
 					UPDATE Parts
 					SET StockQty += qop.Quantity
 					FROM Parts AS p
 					JOIN @QuantityOfOrderedParts AS qop
 					ON qop.PartId = p.PartId
-
-
-				
 			END
 		ELSE
 			BEGIN
 				RETURN;
 			END
-
 END
 GO
 
---testvame
 UPDATE Orders
 SET Delivered = 0
 WHERE OrderId IN (21)
 
-
-
-
-
 --20. Vendor Preference
-
-		
 		select m.FirstName + ' ' + m.LastName AS [Mechanic],
 			   v.Name,
 			   SUM(op.Quantity) AS parts,
@@ -376,53 +293,3 @@ WHERE OrderId IN (21)
 		  ORDER BY m.FirstName + ' ' + m.LastName ASC, 
 			SUM(op.Quantity) DESC, 
 			v.Name ASC
-
-
-
-			Table1.TotalPartsCount
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,5 @@
--- Disable referential integrity
+
+--Disable referential integrity
 EXEC sp_MSForEachTable 'ALTER TABLE ? NOCHECK CONSTRAINT ALL'
 GO
 
@@ -11,7 +12,6 @@ GO
 -- Enable referential integrity 
 EXEC sp_MSForEachTable 'ALTER TABLE ? WITH CHECK CHECK CONSTRAINT ALL'
 GO
-
 
 -- Table: Clients
 SET IDENTITY_INSERT Clients ON
@@ -70,7 +70,6 @@ INSERT INTO Clients (ClientId, FirstName, LastName, Phone) VALUES
 
 SET IDENTITY_INSERT Clients OFF
 
-
 -- Table: Mechanics
 SET IDENTITY_INSERT Mechanics ON
 
@@ -83,7 +82,6 @@ INSERT INTO Mechanics (MechanicId, FirstName, LastName, [Address]) VALUES
 (6, 'Gary', 'Nunlee', '2 W Mount Royal Ave')
 
 SET IDENTITY_INSERT Mechanics OFF
-
 
 -- Table: Models
 SET IDENTITY_INSERT Models ON
@@ -98,7 +96,6 @@ INSERT INTO Models (ModelId, [Name]) VALUES
 
 SET IDENTITY_INSERT Models OFF
 
-
 -- Table: Vendors
 SET IDENTITY_INSERT Vendors ON
 
@@ -109,7 +106,6 @@ INSERT INTO Vendors (VendorId, [Name]) VALUES
 (4, 'Fenghua Import Export')
 
 SET IDENTITY_INSERT Vendors OFF
-
 
 -- Table: Parts
 SET IDENTITY_INSERT Parts ON
@@ -137,7 +133,6 @@ INSERT INTO Parts (PartId, SerialNumber, [Description], Price, VendorId, StockQt
 (20, '4738ER1002A', 'Drain Hose', 20.90, 3, 1)
 
 SET IDENTITY_INSERT Parts OFF
-
 
 -- Table: Jobs
 SET IDENTITY_INSERT Jobs ON
@@ -199,7 +194,6 @@ INSERT INTO Jobs (JobId, ModelId, [Status], ClientId, IssueDate, FinishDate, Mec
 
 SET IDENTITY_INSERT Jobs OFF
 
-
 -- Table: Orders
 SET IDENTITY_INSERT Orders ON
 
@@ -227,7 +221,6 @@ INSERT INTO Orders (OrderId, JobId, IssueDate, Delivered) VALUES
 (21, 51, '2017-04-19', 0)
 
 SET IDENTITY_INSERT Orders OFF
-
 
 -- Table: OrderParts
 INSERT INTO OrderParts (OrderId, PartId, Quantity) VALUES
@@ -266,7 +259,6 @@ INSERT INTO OrderParts (OrderId, PartId, Quantity) VALUES
 (19, 10, 1),
 (20, 13, 1),
 (21, 11, 1)
-
 
 -- Table: PartsNeeded
 INSERT INTO PartsNeeded (JobId, PartId, Quantity) VALUES
